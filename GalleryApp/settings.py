@@ -120,6 +120,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static/']
+MEDIA_ROOT = [BASE_DIR / 'assets/']
+MEDIA_URL = 'assets/'
 
 LOGIN_URL = '/authenticate/login'
 

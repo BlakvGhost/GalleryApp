@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from .models import Album, Photo
 
 @login_required
@@ -34,4 +36,10 @@ def album(request):
         
     
     return redirect('default')
+
+@login_required
+@csrf_exempt
+def upload_image(request):
+    
+    return JsonResponse(True, safe=False, status=200)
 
