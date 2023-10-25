@@ -5,7 +5,10 @@
 {% block 'main' %}
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-<div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.7/vue.global.prod.min.js"
+    integrity="sha512-QSkHACKsowYzL+sd0IEQd75O7nENqe+TR4CGnkLX7JOHvevIlJ3numBaGYRZLwf7FbYBygjtYqrYADYhTL4ioQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<div id="app">
     <div class="p-5 m2-4">
         <h1 class="">Vos Contenus</h1>
         <nav class="d-flex">
@@ -18,14 +21,26 @@
             </h6>
         </nav>
     </div>
-    <div class="mt-2 mb-4 d-flex justify-content-end">
-        <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#createAlbum">Créer un album</button>
+    <div class="mt-2 mb-4 d-flex justify-content-between">
+        <div>
+            <h5 v-if="albumID != null"> ALBUM [[ albumSLUG ]]</h5>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary me-2" v-if="albumID" @click="albumID = null">Retour</button>
+            <button class="btn btn-danger me-2" v-if="albumID" data-mdb-toggle="modal"
+                data-mdb-target="#deleteAlbum">Supprimer</button>
+            <button class="btn btn-primary me-2" v-if="albumID" :data-album-slug="albumSLUG" :data-album-id="albumID"
+                data-mdb-toggle="modal" data-mdb-target="#createAlbum">Editer</button>
+            <button class="btn btn-success me-2" v-if="albumID">Ajouter des images</button>
+            <button class="btn btn-primary" v-if="!albumID" data-mdb-toggle="modal" data-mdb-target="#createAlbum">Créer
+                un album</button>
+        </div>
     </div>
     <div class="container-fluid my-3">
-        <div class="row row-cols-2 row-cols-lg-5 justify-content-center">
+        <div class="row row-cols-2 row-cols-lg-5" :class="!albumID ? 'justify-content-center': 'justify-content-start'">
             {% for album in albums %}
-            <div class="p-2">
-                <div class="card p-0">
+            <div class="p-2" v-if="!albumID">
+                <div class="card p-0" @click="displayAlbum( {{ album.id }}, '{{ album.slug }}')">
                     <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                         <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid" />
                         <a href="javascript:void(0)">
@@ -33,7 +48,7 @@
                         </a>
                     </div>
                     <div class="card-body p-1 text-center">
-                        <h5 class="card-title text-dark"> {{ album.slug }} </h5>
+                        <h5 class="card-title text-dark"> {{ album.slug }} | 25 photos </h5>
                     </div>
                 </div>
             </div>
@@ -46,28 +61,52 @@
                 width="200" height="150" />
         </a> -->
     </div>
-</div>
-<div class="modal fade" id="createAlbum" tabindex="-1" aria-labelledby="createAlbumLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form class="modal-content text-dark" method="POST" action="{% url 'album' %}">
-            {% csrf_token %}
-            <div class="modal-header">
-                <h5 class="modal-title" id="createAlbumLabel">Créer une nouvel album</h5>
-                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="form-outline mb-4 border">
-                    <input name="slug" type="text text-dark" id="slugID" class="form-control" />
-                    <label class="form-label text-dark" for="slugID">Nom</label>
+    <div class="modal fade" id="createAlbum" tabindex="-1" aria-labelledby="createAlbumLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content text-dark" method="POST" action="{% url 'album' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createAlbumLabel" v-if="!albumID">Créer une nouvel album</h5>
+                    <h5 class="modal-title" id="createAlbumLabel" v-if="albumID">Editer [[ albumSLUG ]] </h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Fermé</button>
-                <button type="submit" class="btn btn-primary">Créer</button>
-            </div>
-        </form>
+                <div class="modal-body">
+                    <input type="hidden" name="slugID" id="slugID" :value="albumID">
+                    <div class="form-outline mb-4 border">
+                        <input name="slug" type="text text-dark" id="slug" class="form-control" :value="albumSLUG" />
+                        <label class="form-label text-dark" for="slug">Nom</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Fermé</button>
+                    <button type="submit" class="btn btn-primary" v-if="!albumID">Créer</button>
+                    <button type="submit" class="btn btn-primary" v-if="albumID">Editer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteAlbum" tabindex="-1" aria-labelledby="deleteAlbumLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content text-dark" method="POST" action="{% url 'album' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createAlbumLabel" v-if="albumID">Supprimer [[ albumSLUG ]] </h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <input type="hidden" name="slugID" id="slugID" :value="albumID">
+                    <h5>Etes-vous sur de vouloir supprimer l'album <span class="fw-bold">[[ albumSLUG ]]</span> et son
+                        contenu ? </h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Fermé</button>
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
 <script>
     Fancybox.bind("[data-fancybox]", {
         Toolbar: {
@@ -92,5 +131,23 @@
             },
         },
     });
+    Vue.createApp({
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                albumID: null,
+                albumSLUG: null,
+            }
+        },
+        methods: {
+            displayAlbum: function (albumID, albumSLUG) {
+                this.albumID = albumID;
+                this.albumSLUG = albumSLUG;
+            }
+        },
+        mounted() {
+
+        }
+    }).mount('#app')
 </script>
 {% endblock %}
