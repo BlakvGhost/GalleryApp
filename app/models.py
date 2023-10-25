@@ -14,7 +14,7 @@ class Album(models.Model):
 class Photo(models.Model):
     slug = models.CharField(max_length=100, null=False)
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='photos/', default='default.png')
+    image = models.ImageField(upload_to='assets/', default='default.png')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
