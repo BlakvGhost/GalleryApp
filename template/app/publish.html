@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+{% block 'title' %} Publier vos contenus {% endblock %}
+
+{% block 'main' %}
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+<div>
+    <div class="p-5 mb-4">
+        <h1 class="">Publier</h1>
+        <nav class="d-flex">
+            <h6 class="mb-0">
+                <a href="" class="text-reset">Home</a>
+                <span>/</span>
+                <a href="" class="text-reset">Album</a>
+                <span>/</span>
+                <a href="" class="text-reset"><u>Publier</u></a>
+            </h6>
+        </nav>
+    </div>
+    <div class="drop">
+        <form action="/file-upload" class="dropzone border border-doted border-light" style="height: 400px;" id="galleryForm">
+
+        </form>
+    </div>
+</div>
+<script>
+    let myDropzone = new Dropzone("#galleryForm", {
+        dictDefaultMessage: "Faites glisser des fichiers ici ou cliquez pour télécharger",
+        paramName: "file",
+        maxFilesize: 2,
+        accept: function(file, done) {
+          if (file.name == "justinbieber.jpg") {
+            done("Naha, you don't.");
+          }
+          else { done(); }
+        }
+      });
+</script>
+{% endblock %}

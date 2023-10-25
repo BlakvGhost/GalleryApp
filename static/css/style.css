@@ -45,3 +45,6 @@ body {
     background-color: var(--app-secondary-color); /* Couleur de fond de la thumb au survol */
   }
   
+  .dz-default {
+    margin: 4rem 2rem!important;
+  }
