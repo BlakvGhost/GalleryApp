@@ -21,44 +21,45 @@
     <div class="mt-2 mb-4 d-flex justify-content-end">
         <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#createAlbum">Créer un album</button>
     </div>
-    <div class="gallery my-3">
-        <a href="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    <div class="container-fluid my-3">
+        <div class="row row-cols-2 row-cols-lg-5 justify-content-center">
+            {% for album in albums %}
+            <div class="p-2">
+                <div class="card p-0">
+                    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid" />
+                        <a href="javascript:void(0)">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                        </a>
+                    </div>
+                    <div class="card-body p-1 text-center">
+                        <h5 class="card-title text-dark"> {{ album.slug }} </h5>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- <a href="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             data-fancybox="gallery" data-caption="Caption #1">
             <img class=""
                 src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 width="200" height="150" />
-        </a>
-
-        <a href="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            data-fancybox="gallery" data-caption="Caption #2">
-            <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                width="200" height="150" />
-        </a>
-        <a href="https://plus.unsplash.com/premium_photo-1684331678124-ff62c82cef7a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            data-fancybox="gallery2" data-caption="Caption #1">
-            <img src="https://plus.unsplash.com/premium_photo-1684331678124-ff62c82cef7a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                width="200" height="150" />
-        </a>
-
-        <a href="https://plus.unsplash.com/premium_photo-1661963783275-dff88a0296f6?auto=format&fit=crop&q=80&w=2069&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            data-fancybox="gallery3" data-caption="Caption #2">
-            <img src="https://plus.unsplash.com/premium_photo-1661963783275-dff88a0296f6?auto=format&fit=crop&q=80&w=2069&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                width="200" height="150" />
-        </a>
+        </a> -->
     </div>
 </div>
 <div class="modal fade" id="createAlbum" tabindex="-1" aria-labelledby="createAlbumLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form class="modal-content text-dark">
+        <form class="modal-content text-dark" method="POST" action="{% url 'album' %}">
+            {% csrf_token %}
             <div class="modal-header">
                 <h5 class="modal-title" id="createAlbumLabel">Créer une nouvel album</h5>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="form-outline mb-4 border">
-                    <input type="text text-dark" id="slugID" class="form-control" />
+                    <input name="slug" type="text text-dark" id="slugID" class="form-control" />
                     <label class="form-label text-dark" for="slugID">Nom</label>
-                  </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Fermé</button>
