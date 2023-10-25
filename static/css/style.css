@@ -11,7 +11,7 @@
 
 html,
 body {
-    overflow-x: hidden !important;
+    overflow: hidden !important;
 }
 
 
@@ -27,6 +27,10 @@ body {
 
 .text-app-primary {
     color: var(--app-primary-color)!important;
+}
+
+#main {
+    overflow: scroll;
 }
 
 /* Styles généraux de la scrollbar */

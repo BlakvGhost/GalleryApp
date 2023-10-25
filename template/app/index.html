@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 <div>
-    <div class="p-5 mb-4">
+    <div class="p-5 m2-4">
         <h1 class="">Vos Contenus</h1>
         <nav class="d-flex">
             <h6 class="mb-0">
@@ -18,31 +18,78 @@
             </h6>
         </nav>
     </div>
-    <div class="gallery">
-        <a href="image-a.jpeg" data-fancybox="gallery" data-caption="Caption #1">
-            <img class="" src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-            width="200" height="150"/>
-          </a>
-          
-          <a href="image-b.jpeg" data-fancybox="gallery" data-caption="Caption #2">
+    <div class="mt-2 mb-4 d-flex justify-content-end">
+        <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#createAlbum">Créer un album</button>
+    </div>
+    <div class="gallery my-3">
+        <a href="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            data-fancybox="gallery" data-caption="Caption #1">
+            <img class=""
+                src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                width="200" height="150" />
+        </a>
+
+        <a href="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            data-fancybox="gallery" data-caption="Caption #2">
             <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            width="200" height="150" />
-          </a>
-          <a href="image-a.jpeg" data-fancybox="gallery2" data-caption="Caption #1">
+                width="200" height="150" />
+        </a>
+        <a href="https://plus.unsplash.com/premium_photo-1684331678124-ff62c82cef7a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            data-fancybox="gallery2" data-caption="Caption #1">
             <img src="https://plus.unsplash.com/premium_photo-1684331678124-ff62c82cef7a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            width="200" height="150" />
-          </a>
-          
-          <a href="image-b.jpeg" data-fancybox="gallery3" data-caption="Caption #2">
+                width="200" height="150" />
+        </a>
+
+        <a href="https://plus.unsplash.com/premium_photo-1661963783275-dff88a0296f6?auto=format&fit=crop&q=80&w=2069&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            data-fancybox="gallery3" data-caption="Caption #2">
             <img src="https://plus.unsplash.com/premium_photo-1661963783275-dff88a0296f6?auto=format&fit=crop&q=80&w=2069&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            width="200" height="150" />
-          </a>                    
+                width="200" height="150" />
+        </a>
+    </div>
+</div>
+<div class="modal fade" id="createAlbum" tabindex="-1" aria-labelledby="createAlbumLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createAlbumLabel">Créer une nouvel album</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-outline mb-4">
+                    <input type="text" id="slugID" class="form-control" />
+                    <label class="form-label" for="slugID">Nom</label>
+                  </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
     </div>
 </div>
 <script>
     Fancybox.bind("[data-fancybox]", {
-        // Your custom options
-      });
-      
+        Toolbar: {
+            items: {
+                facebook: {
+                    tpl: `<button class="f-button"><svg><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></button>`,
+                    click: () => {
+                        window.open(
+                            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                        window.location.href
+                      )}&t=${encodeURIComponent(document.title)}`,
+                            "",
+                            "left=0,top=0,width=600,height=300,menubar=no,toolbar=no,resizable=yes,scrollbars=yes"
+                        );
+                    },
+                },
+            },
+            display: {
+                left: ["infobar"],
+                middle: [],
+                right: ["facebook", "slideshow", "download", "thumbs", "close"],
+            },
+        },
+    });
 </script>
 {% endblock %}

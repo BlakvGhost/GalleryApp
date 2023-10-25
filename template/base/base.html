@@ -10,10 +10,10 @@
     <title>{% block 'title' %} {% endblock %} - Votre application pour gérer vos albums</title>
 </head>
 
-<body class="">
+<body class="h-100">
     {% include 'base/header.html' %}
-    <div class="bg-app-primary" style="height: 88vh;">
-        <div class="container text-light">
+    <div class="bg-app-primary" style="height: 88vh;" id="main">
+        <div class="container text-light overflow-scroll">
             {% block 'main' %}
     
             {% endblock %}
