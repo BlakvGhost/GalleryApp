@@ -2,6 +2,7 @@
 
 :root {
     --app-primary-color: #2e4053;
+    --app-secondary-color: #99bbde;
 }
 
 *:not(.fa, .fas, .fad) {
@@ -27,3 +28,20 @@ body {
 .text-app-primary {
     color: var(--app-primary-color)!important;
 }
+
+/* Styles généraux de la scrollbar */
+::-webkit-scrollbar {
+    width: 10px; /* Largeur de la scrollbar */
+  }
+  
+  /* Style de la "thumb" (la partie glissante de la scrollbar) */
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--app-secondary-color); /* Couleur de fond de la thumb */
+    border-radius: 5px; /* Bord arrondi de la thumb */
+  }
+  
+  /* Style au survol de la thumb */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--app-secondary-color); /* Couleur de fond de la thumb au survol */
+  }
+  

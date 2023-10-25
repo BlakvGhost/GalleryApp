@@ -23,16 +23,4 @@
         {% include 'base/footer.html' %}
     </footer>
 </body>
-<script>
-    const $elt = document.querySelector('#staticHeader');
-    const cClass = "position-fixed w-100 start-0 top-0 shadow fv-zd animate__animated animate__fadeInDown";
-    window.addEventListener('scroll', (e) => {
-
-        if (window.scrollY > ($elt.getClientRects()[0].height + 100)) {
-            return $($elt).addClass(cClass);
-        }
-        $($elt).removeClass(cClass);
-    })
-</script>
-
 </html>
