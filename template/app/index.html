@@ -1,9 +1,48 @@
 {% extends 'base/base.html' %}
 
-{% block 'title' %} Vos contenus {% endblock %}
+{% block 'title' %} Publier vos contenus {% endblock %}
 
-{% block main %}
+{% block 'main' %}
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 <div>
-    <h1>Vos contenus</h1>
+    <div class="p-5 mb-4">
+        <h1 class="">Vos Contenus</h1>
+        <nav class="d-flex">
+            <h6 class="mb-0">
+                <a href="" class="text-reset">Home</a>
+                <span>/</span>
+                <a href="{% url 'default' %}" class="text-reset">Albums</a>
+                <span>/</span>
+                <a href="javascript:void(0)" class="text-reset"><u>Tout</u></a>
+            </h6>
+        </nav>
+    </div>
+    <div class="gallery">
+        <a href="image-a.jpeg" data-fancybox="gallery" data-caption="Caption #1">
+            <img class="" src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            width="200" height="150"/>
+          </a>
+          
+          <a href="image-b.jpeg" data-fancybox="gallery" data-caption="Caption #2">
+            <img src="https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            width="200" height="150" />
+          </a>
+          <a href="image-a.jpeg" data-fancybox="gallery2" data-caption="Caption #1">
+            <img src="https://plus.unsplash.com/premium_photo-1684331678124-ff62c82cef7a?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            width="200" height="150" />
+          </a>
+          
+          <a href="image-b.jpeg" data-fancybox="gallery3" data-caption="Caption #2">
+            <img src="https://plus.unsplash.com/premium_photo-1661963783275-dff88a0296f6?auto=format&fit=crop&q=80&w=2069&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            width="200" height="150" />
+          </a>                    
+    </div>
 </div>
+<script>
+    Fancybox.bind("[data-fancybox]", {
+        // Your custom options
+      });
+      
+</script>
 {% endblock %}
