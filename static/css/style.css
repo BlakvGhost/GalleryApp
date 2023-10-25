@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,400;1,900&display=swap');
+
+:root {
+    --app-primary-color: #2e4053;
+}
+
+*:not(.fa, .fas, .fad) {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+html,
+body {
+    overflow-x: hidden !important;
+}
+
+
+.bg-auth {
+    background-image: url('/static/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-app-primary {
+    background-color: var(--app-primary-color)!important;
+}
+
+.text-app-primary {
+    color: var(--app-primary-color)!important;
+}

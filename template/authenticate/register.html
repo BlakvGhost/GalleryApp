@@ -1,0 +1,54 @@
+{% extends 'authenticate/base.html' %}
+
+{% block 'title' %} Créer un compte {% endblock %}
+
+{% block 'main' %}
+
+<form class="w-100" method="post">
+    {% csrf_token %}
+    <div class="pt-3">
+        <h1 class="h3 mb-2 fw-bold text-decoration-underline text-light">Créer un compte</h1>
+        <div class="pt-2">
+            <h6 class="text-muted">Ouvrir un compte pour créer et gérer vos tâches en ligne sans soucis</h6>
+        </div>
+    </div>
+    {% if error %}
+    <div class="alert alert-danger m-3" role="alert">
+        {{ error }}
+    </div>    
+    {% endif %}
+    <div class="mt-4">
+        <div class="row row-cols-lg-2 row-cols-1">
+            <div class="mb-2">
+                <label for="last_name_id" class="form-label w-100 text-start text-light opacity-75">Nom</label>
+                <input name="last_name" type="text" class="form-control" id="last_name_id" placeholder="DOE">
+            </div>
+            <div class="mb-2">
+                <label for="first_name_id" class="form-label w-100 text-start text-light opacity-75">Prénom</label>
+                <input name="first_name" type="text" class="form-control" id="first_name_id" placeholder="John">
+            </div>
+        </div>
+        <div class="mb-2">
+            <label for="email_id" class="form-label w-100 text-start text-light opacity-75">Email</label>
+            <input name="email" type="email" class="form-control" id="email_id" placeholder="exemple@example.com">
+        </div>
+        <div class="row row-cols-lg-2 row-cols-1">
+            <div class="mb-2">
+                <label for="password_id" class="form-label w-100 text-start text-light opacity-75">Mot de Passe</label>
+                <input name="password" type="password" class="form-control" id="password_id" placeholder="**********">
+            </div>
+            <div class="mb-2">
+                <label for="password_confirm_id" class="form-label w-100 text-start text-light opacity-75">Confirmer</label>
+                <input name="password_confirm" type="password" class="form-control" id="password_confirm_id" placeholder="*********">
+            </div>
+        </div>
+        <button class="w-50 w-lg-100 btn btn-dark my-3" type="submit">S'inscrire</button>
+        <div>
+            <a href="{% url 'login' %}" class="text-muted">Vous avez déjà un compte?</a>
+        </div>
+    </div>
+    <div class="py-2 text-light opacity-75">
+        {% include 'base/footer.html' %}
+    </div>
+</form>
+{% endblock %}

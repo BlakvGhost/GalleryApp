@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    {% include 'base/meta.html' %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block 'title' %} {% endblock %} - Votre application pour gérer vos albums</title>
+</head>
+
+<body class="">
+    {% include 'base/header.html' %}
+    <div class="bg-app-primary" style="height: 87vh;">
+        <div class="container">
+            {% block 'main' %}
+    
+            {% endblock %}
+        </div>
+    </div>
+    <footer class="bg-light">
+        {% include 'base/footer.html' %}
+    </footer>
+</body>
+<script>
+    const $elt = document.querySelector('#staticHeader');
+    const cClass = "position-fixed w-100 start-0 top-0 shadow fv-zd animate__animated animate__fadeInDown";
+    window.addEventListener('scroll', (e) => {
+
+        if (window.scrollY > ($elt.getClientRects()[0].height + 100)) {
+            return $($elt).addClass(cClass);
+        }
+        $($elt).removeClass(cClass);
+    })
+</script>
+
+</html>

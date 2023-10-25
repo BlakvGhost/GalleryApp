@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    {% include 'base/meta.html' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block 'title' %} {% endblock %} - Votre application pour gérer vos tâches</title>
+</head>
+
+<body class="bg-auth">
+    <main class="">
+        <div class="form-signin text-center container" style="height: 100vh;">
+            <div class="position-relative h-100 w-100">
+                <div class="container">
+                    <div class="position-absolute w-100 row justify-content-center" style="top: 10%">
+                        <div class="col col-lg-6 col-12 card shadow p-3 rounded bg-app-primary">
+                            {% block 'main' %}
+
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
