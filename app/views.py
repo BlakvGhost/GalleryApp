@@ -29,7 +29,7 @@ def album(request):
     
     if slug:
         if request.method == 'POST':
-            album = Album.objects.create(
+            Album.objects.create(
                 slug=slug,
                 user=request.user
             )
@@ -39,7 +39,24 @@ def album(request):
 
 @login_required
 @csrf_exempt
-def upload_image(request):
-    
-    return JsonResponse(True, safe=False, status=200)
+def upload_image(request, album):
+    if request.method == 'POST':
+        uploaded_file = request.FILES.get('file')
+
+        if uploaded_file:
+            try:
+                album_id = request.POST.get('album_id')
+                album = Album.objects.get(pk=album_id)
+
+                photo = Photo(image=uploaded_file, album=album)
+                photo.save()
+
+                return JsonResponse({'success': True, 'url': photo.image.url})
+            except Exception as e:
+                return JsonResponse({'success': False, 'error': str(e)}, status=400)
+        else:
+            return JsonResponse({'success': False, 'error': 'Aucun fichier téléchargé.'}, status=400)
+
+    return JsonResponse({'success': False, 'error': 'Méthode non autorisée.'}, status=405)
+
 

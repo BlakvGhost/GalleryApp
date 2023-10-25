@@ -19,7 +19,7 @@
         </nav>
     </div>
     <div class="drop">
-        <form action="/file-upload" class="dropzone border border-doted border-light" style="height: 400px;"
+        <form action="{% url 'album.upload' %}" class="dropzone border border-doted border-light" style="height: 400px;"
             id="galleryForm">
 
         </form>
@@ -29,12 +29,15 @@
     let myDropzone = new Dropzone("#galleryForm", {
         dictDefaultMessage: "Faites glisser des fichiers ici ou cliquez pour télécharger",
         paramName: "file",
-        maxFilesize: 2,
+        maxFilesize: 10,
         accept: function (file, done) {
-            if (file.name == "justinbieber.jpg") {
-                done("Naha, you don't.");
-            } else {
+            const acceptedImageTypes = ["image/jpeg", "image/jpg", "image/png",
+            "image/gif"]; // Types MIME des images acceptées
+
+            if (acceptedImageTypes.includes(file.type)) {
                 done();
+            } else {
+                done("Seules les images (jpg, jpeg, png, gif) sont autorisées.");
             }
         }
     });
