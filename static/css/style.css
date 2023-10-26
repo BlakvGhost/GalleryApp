@@ -33,20 +33,17 @@ body {
     overflow: scroll;
 }
 
-/* Styles généraux de la scrollbar */
 ::-webkit-scrollbar {
-    width: 10px; /* Largeur de la scrollbar */
+    width: 10px;
   }
   
-  /* Style de la "thumb" (la partie glissante de la scrollbar) */
   ::-webkit-scrollbar-thumb {
-    background-color: var(--app-secondary-color); /* Couleur de fond de la thumb */
-    border-radius: 5px; /* Bord arrondi de la thumb */
+    background-color: var(--app-secondary-color);
+    border-radius: 5px;
   }
   
-  /* Style au survol de la thumb */
   ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--app-secondary-color); /* Couleur de fond de la thumb au survol */
+    background-color: var(--app-secondary-color);
   }
   
   .dz-default {

@@ -1,7 +1,7 @@
 {
-    "name": "ToDo-App",
-    "short_name": "ToDo",
-    "description": "Votre Solution de Gestion de vos tâches",
+    "name": "Gallery-App",
+    "short_name": "Gallery",
+    "description": "GalleryApp un espace de stockage en toute securité de vos fichiers avec multiple fonctionnalité",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#2e4053",

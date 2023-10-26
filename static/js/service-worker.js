@@ -1,4 +1,4 @@
-const CACHE_NAME = 'TODOAPP_CACHE';
+const CACHE_NAME = 'GALLERY_CACHE';
 
 const urlsToCache = [
   '/',
