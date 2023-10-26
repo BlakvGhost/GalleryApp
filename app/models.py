@@ -36,31 +36,23 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         super(Photo, self).save(*args, **kwargs)
 
-        # Ouvrez l'image avec Pillow
         image = Image.open(self.image.path)
 
-        # Définissez la taille de la miniature souhaitée
         thumbnail_size = (100, 100)
 
-        # Créez une miniature
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
+        
+        thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
 
-        # Obtenez le répertoire de destination pour les miniatures
-        thumbnail_dir = Path(self.image.path).parent
+        if not os.path.exists(thumbnail_dir):
+            os.makedirs(thumbnail_dir)
 
-        # Assurez-vous que le répertoire existe, s'il n'existe pas, créez-le
-        thumbnail_dir.mkdir(parents=True, exist_ok=True)
-
-        # Générez un nom de fichier pour la miniature
         thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
 
-        # Utilisez Path pour créer le chemin complet de la miniature
         thumbnail_path = thumbnail_dir / thumbnail_filename
 
-        # Sauvegardez la miniature
         thumbnail.save(str(thumbnail_path))
 
-        # Stockez le chemin de la miniature dans le champ `image_thumbnail`
         self.image_thumbnail = thumbnail_filename
         self.save()
