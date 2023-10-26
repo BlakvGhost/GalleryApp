@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from slugify import slugify
 from .models import Album, Photo
 
 @login_required
@@ -58,10 +59,10 @@ def upload_image(request, albumID=None):
                 album = Album.objects.filter(pk=albumID, user=request.user).first()
                 if not album:                    
                     slug = f"{request.user.first_name}_{request.user.last_name}"
-                    album, created = Album.objects.get_or_create(user=request.user, slug=slug)
+                    album, created = Album.objects.get_or_create(user=request.user, slug=slugify(slug))
 
                 original_name = uploaded_file.name
-                photo = Photo(image=uploaded_file, album=album, original_name=original_name)
+                photo = Photo(image=uploaded_file, album=album, original_name=slugify(original_name))
                 photo.save()
 
                 return JsonResponse({'success': True, 'url': photo.image.url})
