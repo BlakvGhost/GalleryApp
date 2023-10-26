@@ -36,7 +36,7 @@ class Photo(models.Model):
 
         image = Image.open(self.image.path)
 
-        thumbnail_size = (100, 100)
+        thumbnail_size = (200, 150)
 
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
