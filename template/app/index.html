@@ -21,17 +21,29 @@
             </h6>
         </nav>
     </div>
-    <div class="mt-2 mb-4 d-flex justify-content-between">
-        <div>
+    <div class="mt-2 mb-4 d-flex justify-content-between flex-lg-row flex-column">
+        <div class="my-2">
             <h5 v-if="albumID != null"> ALBUM [[ albumSLUG ]]</h5>
         </div>
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-secondary me-2" v-if="albumID" @click="albumID = null">Retour</button>
+        <div class="d-flex justify-content-end my-2">
+            <button class="btn btn-secondary me-2" v-if="albumID" @click="albumID = null">
+                <span class="mdi mdi-backspace d-lg-none d-block"></span>
+                <span class="d-lg-block d-none">Retour</span>
+            </button>
             <button class="btn btn-danger me-2" v-if="albumID" data-mdb-toggle="modal"
-                data-mdb-target="#deleteAlbum">Supprimer</button>
+                data-mdb-target="#deleteAlbum">
+                <span class="mdi mdi-trash-can d-lg-none d-block"></span>
+                <span class="d-lg-block d-none">Supprimer</span>
+            </button>
             <button class="btn btn-primary me-2" v-if="albumID" :data-album-slug="albumSLUG" :data-album-id="albumID"
-                data-mdb-toggle="modal" data-mdb-target="#createAlbum">Editer</button>
-            <a class="btn btn-success me-2" v-if="albumID" :href="'/publish/' + albumID">Ajouter des images</a>
+                data-mdb-toggle="modal" data-mdb-target="#createAlbum">
+                <span class="mdi mdi-book-edit-outline d-lg-none d-block"></span>
+                <span class="d-lg-block d-none">Editer</span>
+            </button>
+            <a class="btn btn-success me-2" v-if="albumID" :href="'/publish/' + albumID">
+                <span class="mdi mdi-cloud-upload d-lg-none d-block"></span>
+                <span class="d-lg-block d-none">Ajouter des images</span>
+            </a>
             <button class="btn btn-primary" v-if="!albumID" data-mdb-toggle="modal" data-mdb-target="#createAlbum">Créer
                 un album</button>
         </div>
@@ -52,13 +64,11 @@
                     </div>
                 </div>
             </div>
-            <div v-if="albumID == {{ album.id }}" class="gallery w-100">
+            <div v-if="albumID == {{ album.id }}" class="gallery w-100 row row-cols-lg-6 row-cols-1">
                 {% for ph in album.photos.all %}
-                <a href="{{ ph.image.url }}"
-                    data-fancybox="{{ album.slug }}" data-caption="{{ ph.image.name }} ajouté le {{ ph.created_at }}" class="m-2">
-                    <img class=""
-                        src="{{ ph.image.url }}"
-                        width="200" height="150" alt="{{ ph.image.name }}"/>
+                <a href="{{ ph.image.url }}" data-fancybox="{{ album.slug }}"
+                    data-caption="{{ ph.image.name }} ajouté le {{ ph.created_at }}" class="m-2">
+                    <img class="col-12" src="{{ ph.image.url }}" width="200" height="150" alt="{{ ph.image.name }}" />
                 </a>
                 {% endfor %}
             </div>
