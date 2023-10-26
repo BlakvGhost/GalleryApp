@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from slugify import slugify
 from PIL import Image
 import os
+from pathlib import Path
+
 
 class Album(models.Model):
     slug = models.CharField(max_length=100, null=False)
@@ -41,7 +43,7 @@ class Photo(models.Model):
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
 
-        thumbnail_dir = os.path.dirname(self.image.path)
+        thumbnail_dir = Path(self.image.path).parent
 
         if not os.path.exists(thumbnail_dir):
             os.makedirs(thumbnail_dir)
