@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from slugify import slugify
 from PIL import Image
+import os
 
 class Album(models.Model):
     slug = models.CharField(max_length=100, null=False)
@@ -35,13 +36,18 @@ class Photo(models.Model):
 
         image = Image.open(self.image.path)
 
-        thumbnail_size = (200, 150)
+        thumbnail_size = (100, 100)
 
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
 
+        thumbnail_dir = os.path.dirname(self.image.path)
+
+        if not os.path.exists(thumbnail_dir):
+            os.makedirs(thumbnail_dir)
+
         if not self.image_thumbnail:
             self.image_thumbnail = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
 
-        thumbnail_path = self.image_thumbnail.path
+        thumbnail_path = os.path.join(thumbnail_dir, self.image_thumbnail)
         thumbnail.save(thumbnail_path)
