@@ -49,7 +49,7 @@ class Photo(models.Model):
             os.makedirs(thumbnail_dir)
 
         # Générez un nom de fichier pour la miniature
-        thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
+        thumbnail_filename = f'{slugify(self.original_name)}_thumbnail.jpg'
 
         # Utilisez le chemin complet pour la miniature
         thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
