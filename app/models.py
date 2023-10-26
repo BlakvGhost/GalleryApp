@@ -43,7 +43,7 @@ class Photo(models.Model):
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
 
-        thumbnail_dir = Path(self.image.path).parent
+        thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
 
         if not os.path.exists(thumbnail_dir):
             os.makedirs(thumbnail_dir)
@@ -51,6 +51,6 @@ class Photo(models.Model):
         if not self.image_thumbnail:
             self.image_thumbnail = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
 
-        thumbnail_path = thumbnail_dir / self.image_thumbnail
+        thumbnail_path = self.image_thumbnail.path
 
-        thumbnail.save(str(thumbnail_path))
+        thumbnail.save(thumbnail_path)
