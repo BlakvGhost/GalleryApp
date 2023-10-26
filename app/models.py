@@ -25,6 +25,7 @@ class Photo(models.Model):
     original_name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image_thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
 
     def __str__(self):
         return self.original_name
@@ -38,5 +39,9 @@ class Photo(models.Model):
 
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
-        thumbnail_path = self.image.path.replace(".jpg", "_thumbnail.jpg")
+
+        if not self.image_thumbnail:
+            self.image_thumbnail = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
+
+        thumbnail_path = self.image_thumbnail.path
         thumbnail.save(thumbnail_path)
