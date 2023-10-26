@@ -48,17 +48,17 @@
                         </a>
                     </div>
                     <div class="card-body p-1 text-center">
-                        <h5 class="card-title text-dark"> {{ album.slug }} | 25 photos </h5>
+                        <h5 class="card-title text-dark"> {{ album.slug }} | {{ album.photos.all|length }} photos </h5>
                     </div>
                 </div>
             </div>
-            <div v-if="albumID == {{ album.id }}" class="gallery">
+            <div v-if="albumID == {{ album.id }}" class="gallery w-100">
                 {% for ph in album.photos.all %}
                 <a href="{{ ph.image.url }}"
-                    data-fancybox="gallery" data-caption="Caption #1">
+                    data-fancybox="{{ album.slug }}" data-caption="{{ ph.image.name }} ajouté le {{ ph.created_at }}" class="m-2">
                     <img class=""
                         src="{{ ph.image.url }}"
-                        width="200" height="150" />
+                        width="200" height="150" alt="{{ ph.image.name }}"/>
                 </a>
                 {% endfor %}
             </div>
@@ -76,6 +76,7 @@
                 </div>
                 <div class="modal-body">
                     <input type="hidden" name="slugID" id="slugID" :value="albumID">
+                    <input type="hidden" name="_method" id="_method" :value="!albumID ? 'POST' : 'UPDATE'">
                     <div class="form-outline mb-4 border">
                         <input name="slug" type="text text-dark" id="slug" class="form-control" :value="albumSLUG" />
                         <label class="form-label text-dark" for="slug">Nom</label>
@@ -99,6 +100,8 @@
                 </div>
                 <div class="modal-body text-center">
                     <input type="hidden" name="slugID" id="slugID" :value="albumID">
+                    <input type="hidden" name="_method" id="_method" value="DELETE">
+                    <input type="hidden" name="slug" id="slug" :value="albumSLUG">
                     <h5>Etes-vous sur de vouloir supprimer l'album <span class="fw-bold">[[ albumSLUG ]]</span> et son
                         contenu ? </h5>
                 </div>

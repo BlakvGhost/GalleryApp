@@ -29,14 +29,21 @@ def publish(request, album):
 def album(request):
     
     slug = request.POST.get('slug')
+    albumID = request.POST.get('slugID')
+    method = request.POST.get('_method')
     
     if slug:
         if request.method == 'POST':
-            Album.objects.create(
-                slug=slug,
-                user=request.user
-            )
-        
+            if method == 'POST':
+                Album.objects.create(
+                    slug=slug,
+                    user=request.user
+                )
+            elif method == 'UPDATE':
+                Album.objects.filter(pk=albumID, user=request.user).update(slug=slug)
+            elif method == 'DELETE':
+                
+                Album.objects.filter(pk=albumID, user=request.user).delete()
     
     return redirect('default')
 
@@ -48,14 +55,11 @@ def upload_image(request, albumID=None):
 
         if uploaded_file:
             try:
-                # Vérifiez si un album existe pour l'albumID fourni
                 album = Album.objects.filter(pk=albumID, user=request.user).first()
                 if not album:                    
-                    # Si l'albumID n'est pas fourni, créez un album basé sur le nom de l'utilisateur
                     slug = f"{request.user.first_name}_{request.user.last_name}"
                     album, created = Album.objects.get_or_create(user=request.user, slug=slug)
 
-                # Créez une nouvelle instance de Photo et associez-la à l'album
                 photo = Photo(image=uploaded_file, album=album)
                 photo.save()
 
