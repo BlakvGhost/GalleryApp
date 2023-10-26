@@ -41,22 +41,16 @@ class Photo(models.Model):
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
 
-        # Définissez le répertoire de destination pour les miniatures
         thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
 
-        # Assurez-vous que le répertoire existe, s'il n'existe pas, créez-le
         if not os.path.exists(thumbnail_dir):
             os.makedirs(thumbnail_dir)
 
-        # Générez un nom de fichier pour la miniature
-        thumbnail_filename = f'{slugify(self.original_name)}_thumbnail.jpg'
+        thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
 
-        # Utilisez le chemin complet pour la miniature
         thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
 
-        # Sauvegardez la miniature
         thumbnail.save(thumbnail_path)
 
-        # Enfin, attribuez le chemin de la miniature au champ image_thumbnail
-        self.image_thumbnail = thumbnail_filename
+        self.image_thumbnail = thumbnail_path
         self.save()
