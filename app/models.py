@@ -50,4 +50,5 @@ class Photo(models.Model):
             self.image_thumbnail = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
 
         thumbnail_path = os.path.join(thumbnail_dir, self.image_thumbnail)
+
         thumbnail.save(thumbnail_path)
