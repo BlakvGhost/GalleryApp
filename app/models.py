@@ -15,7 +15,7 @@ class Album(models.Model):
 def user_directory_path(instance, filename):
     user = instance.album.user
     album_name = instance.album.slug
-    username = f"{user.id}_{user.first_name}_{user.last_name}"
+    username = f"{user.id} {user.first_name} {user.last_name}"
     return f'{username}/{album_name}/{slugify(filename)}'
 
 class Photo(models.Model):
