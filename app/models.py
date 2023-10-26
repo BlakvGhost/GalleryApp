@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from slugify import slugify
 from PIL import Image
 import os
-from pathlib import Path
-
 
 class Album(models.Model):
     slug = models.CharField(max_length=100, null=False)
@@ -42,17 +40,23 @@ class Photo(models.Model):
 
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
-        
-        thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
 
+        # Définissez le répertoire de destination pour les miniatures
+        thumbnail_dir = os.path.dirname(self.image.path)
+
+        # Assurez-vous que le répertoire existe, s'il n'existe pas, créez-le
         if not os.path.exists(thumbnail_dir):
             os.makedirs(thumbnail_dir)
 
+        # Générez un nom de fichier pour la miniature
         thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
 
-        thumbnail_path = thumbnail_dir / thumbnail_filename
+        # Utilisez le chemin complet pour la miniature
+        thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
 
-        thumbnail.save(str(thumbnail_path))
+        # Sauvegardez la miniature
+        thumbnail.save(thumbnail_path)
 
+        # Enfin, attribuez le chemin de la miniature au champ image_thumbnail
         self.image_thumbnail = thumbnail_filename
         self.save()
