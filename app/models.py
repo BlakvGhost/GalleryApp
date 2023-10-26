@@ -34,12 +34,9 @@ class Photo(models.Model):
 
         image = Image.open(self.image.path)
 
-        thumbnail_size = (100, 100)
+        thumbnail_size = (200, 150)
 
         thumbnail = image.copy()
         thumbnail.thumbnail(thumbnail_size)
         thumbnail_path = self.image.path.replace(".jpg", "_thumbnail.jpg")
         thumbnail.save(thumbnail_path)
-
-    def create_thumbnail(self):
-        pass
