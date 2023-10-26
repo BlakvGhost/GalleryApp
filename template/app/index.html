@@ -53,12 +53,14 @@
                 </div>
             </div>
             <div v-if="albumID == {{ album.id }}" class="gallery">
-                <a href="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                {% for ph in album.photos.all %}
+                <a href="{{ ph.image.url }}"
                     data-fancybox="gallery" data-caption="Caption #1">
                     <img class=""
-                        src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&q=80&w=2072&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="{{ ph.image.url }}"
                         width="200" height="150" />
                 </a>
+                {% endfor %}
             </div>
             {% endfor %}
         </div>
