@@ -60,7 +60,8 @@ def upload_image(request, albumID=None):
                     slug = f"{request.user.first_name}_{request.user.last_name}"
                     album, created = Album.objects.get_or_create(user=request.user, slug=slug)
 
-                photo = Photo(image=uploaded_file, album=album)
+                original_name = uploaded_file.name
+                photo = Photo(image=uploaded_file, album=album, original_name=original_name)
                 photo.save()
 
                 return JsonResponse({'success': True, 'url': photo.image.url})
