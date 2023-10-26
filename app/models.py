@@ -42,7 +42,7 @@ class Photo(models.Model):
         thumbnail.thumbnail(thumbnail_size)
 
         # Définissez le répertoire de destination pour les miniatures
-        thumbnail_dir = os.path.dirname(self.image.path)
+        thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
 
         # Assurez-vous que le répertoire existe, s'il n'existe pas, créez-le
         if not os.path.exists(thumbnail_dir):
