@@ -17,9 +17,11 @@ def default(request):
 
 
 @login_required
-def publish(request):
+def publish(request, album):
     
-    return render(request, 'app/publish.html')
+    return render(request, 'app/publish.html', {
+        'albumID': album,
+    })
 
 
 @login_required
@@ -39,7 +41,8 @@ def album(request):
 
 @login_required
 @csrf_exempt
-def upload_image(request, album):
+def upload_image(request, albumID = None):
+    return JsonResponse(albumID, safe=False)
     if request.method == 'POST':
         uploaded_file = request.FILES.get('file')
 

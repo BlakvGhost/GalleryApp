@@ -19,7 +19,7 @@
         </nav>
     </div>
     <div class="drop">
-        <form action="{% url 'album.upload' %}" class="dropzone border border-doted border-light" style="height: 400px;"
+        <form action="{% url 'album.upload' albumID %}" class="dropzone border border-doted border-light" style="height: 400px;"
             id="galleryForm">
 
         </form>
@@ -31,15 +31,18 @@
         paramName: "file",
         maxFilesize: 10,
         accept: function (file, done) {
-            const acceptedImageTypes = ["image/jpeg", "image/jpg", "image/png",
-            "image/gif"]; // Types MIME des images acceptées
-
+            const acceptedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+            
             if (acceptedImageTypes.includes(file.type)) {
                 done();
             } else {
                 done("Seules les images (jpg, jpeg, png, gif) sont autorisées.");
             }
-        }
+        },
+        success: function (file, response) {
+            console.log(response);
+            }
     });
+    
 </script>
 {% endblock %}
