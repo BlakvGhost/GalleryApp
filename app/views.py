@@ -58,7 +58,7 @@ def upload_image(request, albumID=None):
             try:
                 album = Album.objects.filter(pk=albumID, user=request.user).first()
                 if not album:                    
-                    slug = f"{request.user.first_name}_{request.user.last_name}"
+                    slug = f"{request.user.first_name} {request.user.last_name}"
                     album, created = Album.objects.get_or_create(user=request.user, slug=slug)
 
                 original_name = uploaded_file.name
