@@ -20,6 +20,7 @@ def default(request):
 def publish(request, album):
     
     return render(request, 'app/publish.html', {
+        'album': Album.objects.filter(pk=album, user=request.user).first(),
         'albumID': album,
     })
 
@@ -41,16 +42,20 @@ def album(request):
 
 @login_required
 @csrf_exempt
-def upload_image(request, albumID = None):
-    return JsonResponse(albumID, safe=False)
+def upload_image(request, albumID=None):
     if request.method == 'POST':
         uploaded_file = request.FILES.get('file')
 
         if uploaded_file:
             try:
-                album_id = request.POST.get('album_id')
-                album = Album.objects.get(pk=album_id)
+                # Vérifiez si un album existe pour l'albumID fourni
+                album = Album.objects.filter(pk=albumID, user=request.user).first()
+                if not album:                    
+                    # Si l'albumID n'est pas fourni, créez un album basé sur le nom de l'utilisateur
+                    slug = f"{request.user.first_name}_{request.user.last_name}"
+                    album, created = Album.objects.get_or_create(user=request.user, slug=slug)
 
+                # Créez une nouvelle instance de Photo et associez-la à l'album
                 photo = Photo(image=uploaded_file, album=album)
                 photo.save()
 

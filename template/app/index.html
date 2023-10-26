@@ -31,7 +31,7 @@
                 data-mdb-target="#deleteAlbum">Supprimer</button>
             <button class="btn btn-primary me-2" v-if="albumID" :data-album-slug="albumSLUG" :data-album-id="albumID"
                 data-mdb-toggle="modal" data-mdb-target="#createAlbum">Editer</button>
-            <button class="btn btn-success me-2" v-if="albumID">Ajouter des images</button>
+            <a class="btn btn-success me-2" v-if="albumID" :href="'/publish/' + albumID">Ajouter des images</a>
             <button class="btn btn-primary" v-if="!albumID" data-mdb-toggle="modal" data-mdb-target="#createAlbum">Créer
                 un album</button>
         </div>

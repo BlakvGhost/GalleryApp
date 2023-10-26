@@ -14,12 +14,12 @@
                 <span>/</span>
                 <a href="{% url 'default' %}" class="text-reset">Albums</a>
                 <span>/</span>
-                <a href="javascript:void(0)" class="text-reset"><u>Publier</u></a>
+                <a href="javascript:void(0)" class="text-reset"><u> {{ album.slug|default:"Nouvel Album" }} </u></a>
             </h6>
         </nav>
     </div>
     <div class="drop">
-        <form action="{% url 'album.upload' albumID %}" class="dropzone border border-doted border-light" style="height: 400px;"
+        <form action="{% url 'album.upload' album.id|default:albumID %}" class="dropzone border border-doted border-light" style="height: 400px;"
             id="galleryForm">
 
         </form>
@@ -27,7 +27,7 @@
 </div>
 <script>
     let myDropzone = new Dropzone("#galleryForm", {
-        dictDefaultMessage: "Faites glisser des fichiers ici ou cliquez pour télécharger",
+        dictDefaultMessage: "Faites glisser des fichiers ici ou cliquez pour télécharger dans l'album {{ album.slug|default:'Nouvel Album' }}",
         paramName: "file",
         maxFilesize: 10,
         accept: function (file, done) {
