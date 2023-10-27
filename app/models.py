@@ -1,8 +1,10 @@
+from io import BytesIO
 from django.db import models
 from django.contrib.auth.models import User
 from slugify import slugify
 from PIL import Image
 from django.core.files import File
+from django.core.files.base import ContentFile
 import os
 
 class Album(models.Model):
@@ -33,30 +35,17 @@ class Photo(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.image_thumbnail:
-            # Utilisez super().save() pour enregistrer le modèle Photo
-            super(Photo, self).save(*args, **kwargs)
-
-            # Rechargez le modèle pour vous assurer d'obtenir les informations les plus récentes
-            self.refresh_from_db()
-
             image = Image.open(self.image.path)
             thumbnail_size = (200, 150)
             thumbnail = image.copy()
             thumbnail.thumbnail(thumbnail_size)
-            thumbnail_dir = os.path.dirname(self.image_thumbnail.path)  # Utilisez le répertoire de l'image source
 
-            if not os.path.exists(thumbnail_dir):
-                os.makedirs(thumbnail_dir)
+            thumbnail_data = BytesIO()
+            thumbnail.save(thumbnail_data, 'JPEG')
+            thumbnail_data.seek(0)
 
             thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
-            thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
+            self.image_thumbnail.save(thumbnail_filename, ContentFile(thumbnail_data), save=False)
 
-            thumbnail.save(thumbnail_path)
-
-            # Utilisez la méthode File() pour créer un objet File à partir du chemin de la miniature
-            with open(thumbnail_path, 'rb') as f:
-                self.image_thumbnail.save(thumbnail_filename, File(f), save=False)
-
-            # Réenregistrez le modèle pour mettre à jour l'attribut image_thumbnail
-            super(Photo, self).save(*args, **kwargs)
+        super(Photo, self).save(*args, **kwargs)
 
