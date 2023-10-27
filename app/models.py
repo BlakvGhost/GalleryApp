@@ -43,7 +43,7 @@ class Photo(models.Model):
             thumbnail_size = (200, 150)
             thumbnail = image.copy()
             thumbnail.thumbnail(thumbnail_size)
-            thumbnail_dir = os.path.dirname(self.image.path)  # Utilisez le répertoire de l'image source
+            thumbnail_dir = os.path.dirname(self.image_thumbnail.path)  # Utilisez le répertoire de l'image source
 
             if not os.path.exists(thumbnail_dir):
                 os.makedirs(thumbnail_dir)
