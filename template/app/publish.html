@@ -29,7 +29,7 @@
     let myDropzone = new Dropzone("#galleryForm", {
         dictDefaultMessage: "Faites glisser des fichiers ici ou cliquez pour télécharger dans l'album {{ album.slug|default:'Nouvel Album' }}",
         paramName: "file",
-        maxFilesize: 10,
+        maxFilesize: 20,
         accept: function (file, done) {
             const acceptedImageTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
             
@@ -40,8 +40,8 @@
             }
         },
         success: function (file, response) {
-            console.log(response);
-            }
+            //console.log(response);
+        }
     });
     
 </script>
