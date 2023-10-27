@@ -35,17 +35,23 @@ class Photo(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.image_thumbnail:
+            super(Photo, self).save(*args, **kwargs)
+
             image = Image.open(self.image.path)
             thumbnail_size = (200, 150)
             thumbnail = image.copy()
             thumbnail.thumbnail(thumbnail_size)
 
-            thumbnail_data = BytesIO()
-            thumbnail.save(thumbnail_data, 'JPEG')
-            thumbnail_data.seek(0)
+            thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
+            if not os.path.exists(thumbnail_dir):
+                os.makedirs(thumbnail_dir)
 
             thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
-            self.image_thumbnail.save(thumbnail_filename, ContentFile(thumbnail_data), save=False)
+            thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
 
-        super(Photo, self).save(*args, **kwargs)
+            with open(thumbnail_path, 'wb') as thumbnail_file:
+                thumbnail.save(thumbnail_file, 'JPEG')
+
+            self.image_thumbnail = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
+            self.save(update_fields=['image_thumbnail'])
 
