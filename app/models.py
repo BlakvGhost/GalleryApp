@@ -33,6 +33,8 @@ class Photo(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.image_thumbnail:
+            super(Photo, self).save(*args, **kwargs)
+
             image = Image.open(self.image.path)
             thumbnail_size = (200, 150)
             thumbnail = image.copy()
@@ -50,4 +52,3 @@ class Photo(models.Model):
             with open(thumbnail_path, 'rb') as f:
                 self.image_thumbnail.save(thumbnail_filename, File(f), save=False)
 
-        super(Photo, self).save(*args, **kwargs)
