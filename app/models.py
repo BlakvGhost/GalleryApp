@@ -33,25 +33,25 @@ class Photo(models.Model):
     def __str__(self):
         return self.original_name
 
-    def save(self, *args, **kwargs):
-        if not self.image_thumbnail:
-            super(Photo, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.image_thumbnail:
+    #         super(Photo, self).save(*args, **kwargs)
 
-            image = Image.open(self.image.path)
-            thumbnail_size = (200, 150)
-            thumbnail = image.copy()
-            thumbnail.thumbnail(thumbnail_size)
+    #         image = Image.open(self.image.path)
+    #         thumbnail_size = (200, 150)
+    #         thumbnail = image.copy()
+    #         thumbnail.thumbnail(thumbnail_size)
 
-            thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
-            if not os.path.exists(thumbnail_dir):
-                os.makedirs(thumbnail_dir)
+    #         thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
+    #         if not os.path.exists(thumbnail_dir):
+    #             os.makedirs(thumbnail_dir)
 
-            thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
-            thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
+    #         thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
+    #         thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
 
-            with open(thumbnail_path, 'wb') as thumbnail_file:
-                thumbnail.save(thumbnail_file, 'JPEG')
+    #         with open(thumbnail_path, 'wb') as thumbnail_file:
+    #             thumbnail.save(thumbnail_file, 'JPEG')
 
-            self.image_thumbnail = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
-            self.save(update_fields=['image_thumbnail'])
+    #         self.image_thumbnail = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
+    #         self.save(update_fields=['image_thumbnail'])
 

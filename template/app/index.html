@@ -66,9 +66,9 @@
             </div>
             <div v-if="albumID == {{ album.id }}" class="gallery w-100 row row-cols-lg-6 row-cols-1">
                 {% for ph in album.photos.all %}
-                <a href="{{ ph.image.url }}" data-fancybox="{{ album.slug }}" data-thumb="{{ ph.image_thumbnail.url }}"
+                <a href="{{ ph.image.url }}" data-fancybox="{{ album.slug }}" data-thumb="{{ ph.image.url }}"
                     data-caption="{{ ph.original_name }} ajouté le {{ ph.created_at }}" class="m-2">
-                    <img class="col-12" src="{{ ph.image_thumbnail.url }}" width="200" height="150" alt="{{ ph.original_name }}" />
+                    <img class="col-12" src="{{ ph.image.url }}" width="200" height="150" alt="{{ ph.original_name }}" />
                 </a>
                 {% endfor %}
             </div>
