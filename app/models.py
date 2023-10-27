@@ -33,13 +33,11 @@ class Photo(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.image_thumbnail:
-            super(Photo, self).save(*args, **kwargs)
-
             image = Image.open(self.image.path)
             thumbnail_size = (200, 150)
             thumbnail = image.copy()
             thumbnail.thumbnail(thumbnail_size)
-            thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
+            thumbnail_dir = os.path.dirname(self.image.path)
 
             if not os.path.exists(thumbnail_dir):
                 os.makedirs(thumbnail_dir)
@@ -51,4 +49,6 @@ class Photo(models.Model):
 
             with open(thumbnail_path, 'rb') as f:
                 self.image_thumbnail.save(thumbnail_filename, File(f), save=False)
+
+        super(Photo, self).save(*args, **kwargs)
 
