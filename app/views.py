@@ -8,7 +8,7 @@ from .models import Album, Photo
 @login_required
 def default(request):
     
-    albums = Album.objects.all().order_by('-id')
+    albums = Album.objects.filter(user=request.user).order_by('-id')
     
     context = {
         'albums': albums,
