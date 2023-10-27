@@ -31,23 +31,23 @@ class Photo(models.Model):
     def __str__(self):
         return self.original_name
 
-    # def save(self, *args, **kwargs):
-    #     if not self.image_thumbnail:
-    #         image = Image.open(self.image.path)
-    #         thumbnail_size = (200, 150)
-    #         thumbnail = image.copy()
-    #         thumbnail.thumbnail(thumbnail_size)
-    #         thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
+    def save(self, *args, **kwargs):
+        if not self.image_thumbnail:
+            image = Image.open(self.image.path)
+            thumbnail_size = (200, 150)
+            thumbnail = image.copy()
+            thumbnail.thumbnail(thumbnail_size)
+            thumbnail_dir = os.path.dirname(self.image_thumbnail.path)
 
-    #         if not os.path.exists(thumbnail_dir):
-    #             os.makedirs(thumbnail_dir)
+            if not os.path.exists(thumbnail_dir):
+                os.makedirs(thumbnail_dir)
 
-    #         thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
-    #         thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
+            thumbnail_filename = f'thumbnails/{slugify(self.original_name)}_thumbnail.jpg'
+            thumbnail_path = os.path.join(thumbnail_dir, thumbnail_filename)
 
-    #         thumbnail.save(thumbnail_path)
+            thumbnail.save(thumbnail_path)
 
-    #         with open(thumbnail_path, 'rb') as f:
-    #             self.image_thumbnail.save(thumbnail_filename, File(f), save=False)
+            with open(thumbnail_path, 'rb') as f:
+                self.image_thumbnail.save(thumbnail_filename, File(f), save=False)
 
-    #     super(Photo, self).save(*args, **kwargs)
+        super(Photo, self).save(*args, **kwargs)
